@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hangman</title>
+</head>
+<body>
+	<h1>
+		Hangman!
+	</h1>
+
+	<div class="PressAnyKey">
+		<p>
+			Press Any Key To Get Started!
+		</p>
+	</div>
+	<div>
+		<p>
+			Wins
+		</p>
+	</div>
+	<div>
+		<p>
+			Current Word
+		</p>
+		<p id="CurrentWord">
+		</p>
+	</div>
+	<div>
+		<p>
+			Number of Guesses Remaining
+		</p>
+	</div>
+	<div>
+		<p>
+			Letters Already Guessed
+		</p>
+	</div>
+
+
+
+	
+
+	<script type="text/javascript">
+
+	
+	//Index of Wrong Guesses
+	var wrognGuessIndex = [];
+
+	//Wrong guess counter 
+	var wrongGuess = 10;
+
+	//Word Bank
+	var wordBank = {
+
+			Easy: ["cow","dot","cat","cool","red","blue"],
+			Medium: ["coffee","twitter","purple","reddit","hero","funnel"],
+			Hard: ["lightning","reaction","planetside","windows", "angriest"]
+
+
+		}
+	//Random word generation
+	var randomEasyWord = wordBank.Easy[Math.floor(Math.random()*wordBank.Easy.length)];
+	var randomMediumWord = Math.floor(Math.random()*wordBank.Medium.length);
+	var randomHardWord = Math.floor(Math.random()*wordBank.Hard.length);
+
+	//Copy the word to make the _ array and guess array
+
+	var hiddenLetters = [];
+
+	var rightLettersArray = new Array(randomEasyWord.length);
+
+	for (var i=0; i < randomEasyWord.length; i++) {
+		rightLettersArray.push(randomEasyWord[i]);
+		
+		
+	}
+	console.log(rightLettersArray);
+
+
+	//parse out each letter 
+	for (var j=0; j < randomEasyWord.length; j++) {
+		hiddenLetters.push(randomEasyWord[j]);
+	
+	}
+
+	//convert each letter into a an underscore
+	for (var j=0; j < hiddenLetters.length; j++) {
+		hiddenLetters[j] = "_ ";
+
+		
+	}
+	console.log(hiddenLetters)
+
+	//Eliminate the comma separators
+	var hiddenLettersNoCommas = hiddenLetters.join("")
+
+	//put random word as blanks into the HTML
+	document.getElementById("CurrentWord").innerHTML = hiddenLettersNoCommas;
+
+	
+
+	//User guesses a letter
+	document.onkeyup = function(event) {
+
+		var userInput = String.fromCharCode(event.keyCode).toLowerCase();
+
+		if (rightLettersArray.indexOf(userInput) !== -1) {
+			console.log("Correct!");
+			hiddenLettersNoCommas.prototype.splice(rightLettersArray.indexOf(userInput), hiddenLettersNoCommas[rightLettersArray.indexOf(userInput)], userInput);
+
+		}
+
+		else {
+			console.log("Incorrect!");
+			wrongGuess--;
+			document.getElementById("NumberOfGuessesRemaining").innerHTML = wrongGuess;
+		}
+
+		document.getElementById("CurrentWord").innerHTML = hiddenLettersNoCommas;
+
+		if (wrongGuess === 0) {
+			alert("Game Over!");
+
+		}	
+	}
+
+ 	
+
+
+
+	
+
+
+	</script>
+
+</body>
+</html>
