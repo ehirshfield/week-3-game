@@ -77,8 +77,8 @@
 	//Correct number of Guesses
 	var correctLettersGuessed = 0;
 
-	//Index of Wrong Guesses
-	var lettersAlreadyGuessed = [];
+	//Wrong letter index
+	var incorrectLetters = [];
 
 	//Wrong guess counter 
 	var wrongGuess = 10;
@@ -137,7 +137,7 @@
 
 
 
-	//User guesses a letter
+	//User guesses a letter 
 	document.onkeyup = function(event) {
 
 		var userInput = String.fromCharCode(event.keyCode).toLowerCase();
@@ -150,27 +150,30 @@
 				console.log(hiddenLetters);
 				var lettersNoCommas = hiddenLetters.join("");
 				document.getElementById("CurrentWord").innerHTML = lettersNoCommas;
-				correctLettersGuessed++;
-				wrongGuess++;
+				
+				continue;
 			}
 		
-		
-			// else if (wrongGuess++ > 1) {
-
-			// 	wrongGuess--;
 			
-			// }
+
 		
 		
-			else if (userInput !== rightLettersArray[l] && l === (rightLettersArray.length) - 1) {
-				wrongGuess--;
+			//else if (userInput !== rightLettersArray[l] && l === (rightLettersArray.length) - 1) {
+			else if (rightLettersArray.indexOf(userInput) === -1 && l === (rightLettersArray.length) - 1) {
+				
 				document.getElementById("NumberOfGuessesRemaining").innerHTML = wrongGuess;
-				lettersAlreadyGuessed.push(userInput);
-				document.getElementById("LettersAlreadyGuessed").innerHTML = lettersAlreadyGuessed;
+				incorrectLetters.push(userInput);
+				document.getElementById("LettersAlreadyGuessed").innerHTML = incorrectLetters;
+				wrongGuess = (10 - incorrectLetters.length);
+				document.getElementById("NumberOfGuessesRemaining").innerHTML = wrongGuess;
+
 				
 
+			}
 
-
+			else if (incorrectLetters.indexOf(userInput) !== -1) {
+				console.log("works!")
+				break;
 			}
 
 		}
@@ -180,31 +183,6 @@
 				alert("Game Over!");
 				resetFunction;
 			}
-		
-	// //Win Condition
-	// 	var winCondition = true;
-
-	// 	for (var w = 0; w < hiddenLetters.length; w++) {
-	// 		if(hiddenLetters[w] === "_ "){
-	// 			winCondition = false;
-
-	// 		}
-	// 	}
-
-	// 	if (winCondition = true) {
-	// 		alert("You Win!");
-	// 		winCount++;
-	// 		document.getElementById("WinCounter").innerHTML = winCount;
-
-	// 	}
-
-
-	// //Lose Condition
-	// 	if (wrongGuess === 0) {
-
-	// 		alert("You Lose!");
-	// 		resetFunction;
-	// 	}
 
 
 
@@ -212,7 +190,7 @@
 	}
 
  	
-
+	
 
 
 	
