@@ -1,11 +1,48 @@
+body {
+	background-image: url("../images/swirl_pattern.png");
+	background-repeat: repeat;
+	
+}
+
+
 h1 {
 	text-align: center;
+
 }
 
 #Instructions {
 	text-align: center;
+	
 }
 
 .InnerDivs {
+	text-align: center;
+}
+
+#CurrentWord {
+	font-size: 60px;
+}
+
+.jumbotron {
+	background-image: url("../images/escheresque_ste.png");
+	background-repeat: repeat;
+	color: #ffffff;
+	border-radius: 20px;
+}
+
+* {
+	margin: 0;
+}
+html, body {
+	height: 100%;
+}
+.wrapper {
+	min-height: 100%;
+	height: auto !important; /* This line and the next line are not necessary unless you need IE6 support */
+	height: 100%;
+	margin: 0 auto -50px; /* the bottom margin is the negative value of the footer's height */
+}
+.footer, .push {
+	height: 50px; /* .push must be the same height as .footer */
 	text-align: center;
 }

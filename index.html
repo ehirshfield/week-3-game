@@ -10,53 +10,63 @@
 
 </head>
 <body>
-	<h1>
-		Hangman!
-	</h1>
+		<div class="wrapper">
+			<div class="row">
+				<h1 class="col-md-12">
+					Hangman!
+				</h1>
+			</div>
 
-	<div class="col-lg-1">
-	</div>
+			<div class="row">
+				<div class="col-md-1">
+				</div>
 
-	<div class="jumbotron col-lg-10">
-		<div class="PressAnyKey">
-			<p id="Instructions">
-				Press Any Key To Get Started!
-			</p>
-		</div>
-		
-		<div class="InnerDivs">
-			<p>
-				Current Word
-			</p>
-			<p id="CurrentWord">
-			</p>
-		</div>
-		<div class="InnerDivs">
-			<p>
-				Number of Guesses Remaining
-			</p>
-			<p id="NumberOfGuessesRemaining">
-			</p>
-		</div>
-		<div class="InnerDivs">
-			<p>
-				Letters Already Guessed
-			</p>
-			<p id="LettersAlreadyGuessed">
-			</p>
-		</div>
-		<div class="InnerDivs">
-			<p>
-				Wins
-			</p>
-			<p id="WinCounter">
-			</p>
-		</div>
-	</div>
+				<div class="jumbotron col-md-10">
+					<div class="PressAnyKey">
+						<p id="Instructions">
+							Press Any Key To Get Started!
+						</p>
+					</div>
+					
+					<div class="InnerDivs">
+						<p>
+							Current Word
+						</p>
+						<p id="CurrentWord">
+						</p>
+					</div>
+					<div class="InnerDivs">
+						<p>
+							Number of Guesses Remaining
+						</p>
+						<p id="NumberOfGuessesRemaining">
+						</p>
+					</div>
+					<div class="InnerDivs">
+						<p>
+							Letters Already Guessed
+						</p>
+						<p id="LettersAlreadyGuessed">
+						</p>
+					</div>
+					<div class="InnerDivs">
+						<p>
+							Wins
+						</p>
+						<p id="WinCounter">
+						</p>
+					</div>
+				</div>
 
-	<div class="col-lg-1">
-	</div>
+				<div class="col-md-1">
+				</div>
 
+			</div>
+			<div class="push"></div>
+    	</div>
+        <div class="footer">
+            <p>Copyright (c) Eric Hirshfield-Yamanishi 2016</p>
+    	</div>
 	
 
 	<script type="text/javascript">
@@ -163,15 +173,13 @@
 
 			}
 
-			if (wrongGuess === 0) {
+		}
 
-				alert("Game Over!")
+		if (wrongGuess === 0) {
+
+				alert("Game Over!");
 				resetFunction;
 			}
-
-			
-
-		}
 		
 	// //Win Condition
 	// 	var winCondition = true;
