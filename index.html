@@ -49,6 +49,7 @@
 						<p id="LettersAlreadyGuessed">
 						</p>
 					</div>
+
 					<div class="InnerDivs">
 
 							Wins: 
@@ -199,7 +200,7 @@
 			}
 
 			else if (incorrectLetters.indexOf(userInput) !== -1) {
-				console.log("works!")
+				console.log("duplicate!")
 				break;
 			}
 
@@ -215,6 +216,7 @@
 
 			winCount++;
 			document.getElementById("WinCounter").innerHTML = winCount;
+			alert("You win! The word was " + randomEasyWord.toUpperCase() + "!");
 			resetTrigger();
 		}
 
