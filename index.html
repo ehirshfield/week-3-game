@@ -30,10 +30,14 @@
 		<p>
 			Number of Guesses Remaining
 		</p>
+		<p id="NumberOfGuessesRemaining">
+		</p>
 	</div>
 	<div>
 		<p>
 			Letters Already Guessed
+		</p>
+		<p id="LettersAlreadyGuessed">
 		</p>
 	</div>
 
@@ -45,10 +49,11 @@
 
 	
 	//Index of Wrong Guesses
-	var wrognGuessIndex = [];
+	var lettersAlreadyGuessed = [];
 
 	//Wrong guess counter 
 	var wrongGuess = 10;
+	document.getElementById("NumberOfGuessesRemaining").innerHTML = wrongGuess;
 
 	//Word Bank
 	var wordBank = {
@@ -68,7 +73,7 @@
 
 	var hiddenLetters = [];
 
-	var rightLettersArray = new Array(randomEasyWord.length);
+	var rightLettersArray = [];
 
 	for (var i=0; i < randomEasyWord.length; i++) {
 		rightLettersArray.push(randomEasyWord[i]);
@@ -85,18 +90,15 @@
 	}
 
 	//convert each letter into a an underscore
-	for (var j=0; j < hiddenLetters.length; j++) {
-		hiddenLetters[j] = "_ ";
+	for (var k=0; k < hiddenLetters.length; k++) {
+		hiddenLetters[k] = "_ ";
 
 		
 	}
-	console.log(hiddenLetters)
 
-	//Eliminate the comma separators
-	var hiddenLettersNoCommas = hiddenLetters.join("")
-
-	//put random word as blanks into the HTML
-	document.getElementById("CurrentWord").innerHTML = hiddenLettersNoCommas;
+	var placeholderLetters = hiddenLetters.join("");
+	document.getElementById("CurrentWord").innerHTML = placeholderLetters;
+	console.log(hiddenLetters);
 
 	
 
@@ -105,20 +107,46 @@
 
 		var userInput = String.fromCharCode(event.keyCode).toLowerCase();
 
-		if (rightLettersArray.indexOf(userInput) !== -1) {
-			console.log("Correct!");
-			hiddenLettersNoCommas.prototype.splice(rightLettersArray.indexOf(userInput), hiddenLettersNoCommas[rightLettersArray.indexOf(userInput)], userInput);
+		//Loop to check answer
+		for (l = 0; l < rightLettersArray.length; l++) {
+			if (userInput === rightLettersArray[l]) {
+				
+				hiddenLetters[l] = userInput;
+				console.log(hiddenLetters);
+				break;
+			}
+		
+	
+			else if (userInput === hiddenLetters[l]) {
 
+				console.log("TEST");
+				
+
+			}
+		
+		
+			else if (userInput !== rightLettersArray[l] && l === (rightLettersArray.length) - 1) {
+				console.log("WRONG");
+				wrongGuess--;
+				document.getElementById("NumberOfGuessesRemaining").innerHTML = wrongGuess;
+				lettersAlreadyGuessed.push(userInput);
+				document.getElementById("LettersAlreadyGuessed").innerHTML = lettersAlreadyGuessed;
+				
+
+			}
+
+		
 		}
+		
+			
+		var lettersNoCommas = hiddenLetters.join("");
+		document.getElementById("CurrentWord").innerHTML = lettersNoCommas;
+		
+		
 
-		else {
-			console.log("Incorrect!");
-			wrongGuess--;
-			document.getElementById("NumberOfGuessesRemaining").innerHTML = wrongGuess;
-		}
-
-		document.getElementById("CurrentWord").innerHTML = hiddenLettersNoCommas;
-
+	
+		
+		//Game over
 		if (wrongGuess === 0) {
 			alert("Game Over!");
 
