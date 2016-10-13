@@ -2,52 +2,71 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+
+	<link rel="stylesheet" href="assets/css/reset.css" />
+	<link rel="stylesheet" href="assets/css/bootstrap.css" />
+	<link rel="stylesheet" href="assets/css/style.css" />
 	<title>Hangman</title>
+
 </head>
 <body>
 	<h1>
 		Hangman!
 	</h1>
 
-	<div class="PressAnyKey">
-		<p>
-			Press Any Key To Get Started!
-		</p>
-	</div>
-	<div>
-		<p>
-			Wins
-		</p>
-	</div>
-	<div>
-		<p>
-			Current Word
-		</p>
-		<p id="CurrentWord">
-		</p>
-	</div>
-	<div>
-		<p>
-			Number of Guesses Remaining
-		</p>
-		<p id="NumberOfGuessesRemaining">
-		</p>
-	</div>
-	<div>
-		<p>
-			Letters Already Guessed
-		</p>
-		<p id="LettersAlreadyGuessed">
-		</p>
+	<div class="col-lg-1">
 	</div>
 
+	<div class="jumbotron col-lg-10">
+		<div class="PressAnyKey">
+			<p id="Instructions">
+				Press Any Key To Get Started!
+			</p>
+		</div>
+		
+		<div class="InnerDivs">
+			<p>
+				Current Word
+			</p>
+			<p id="CurrentWord">
+			</p>
+		</div>
+		<div class="InnerDivs">
+			<p>
+				Number of Guesses Remaining
+			</p>
+			<p id="NumberOfGuessesRemaining">
+			</p>
+		</div>
+		<div class="InnerDivs">
+			<p>
+				Letters Already Guessed
+			</p>
+			<p id="LettersAlreadyGuessed">
+			</p>
+		</div>
+		<div class="InnerDivs">
+			<p>
+				Wins
+			</p>
+			<p id="WinCounter">
+			</p>
+		</div>
+	</div>
 
+	<div class="col-lg-1">
+	</div>
 
 	
 
 	<script type="text/javascript">
 
-	
+	//Number of Wins
+	var winCount = 0;
+
+	//Correct number of Guesses
+	var correctLettersGuessed = 0;
+
 	//Index of Wrong Guesses
 	var lettersAlreadyGuessed = [];
 
@@ -58,16 +77,13 @@
 	//Word Bank
 	var wordBank = {
 
-			Easy: ["cow","dot","cat","cool","red","blue"],
-			Medium: ["coffee","twitter","purple","reddit","hero","funnel"],
-			Hard: ["lightning","reaction","planetside","windows", "angriest"]
-
+			Easy: ["cow","dot","cat","cool","red","blue","coffee","twitter","purple","reddit","hero","funnel","lightning","reaction","planetside","windows", "angriest"]
 
 		}
 	//Random word generation
 	var randomEasyWord = wordBank.Easy[Math.floor(Math.random()*wordBank.Easy.length)];
-	var randomMediumWord = Math.floor(Math.random()*wordBank.Medium.length);
-	var randomHardWord = Math.floor(Math.random()*wordBank.Hard.length);
+	// var randomMediumWord = Math.floor(Math.random()*wordBank.Medium.length);
+	// var randomHardWord = Math.floor(Math.random()*wordBank.Hard.length);
 
 	//Copy the word to make the _ array and guess array
 
@@ -100,7 +116,16 @@
 	document.getElementById("CurrentWord").innerHTML = placeholderLetters;
 	console.log(hiddenLetters);
 
-	
+	//Reset function
+	var resetFunction = function() {
+		wrongGuess = 10;
+		randomEasyWord = wordBank.Easy[Math.floor(Math.random()*wordBank.Easy.length)];
+
+	}	
+
+
+
+
 
 	//User guesses a letter
 	document.onkeyup = function(event) {
@@ -113,44 +138,69 @@
 				
 				hiddenLetters[l] = userInput;
 				console.log(hiddenLetters);
-				break;
+				var lettersNoCommas = hiddenLetters.join("");
+				document.getElementById("CurrentWord").innerHTML = lettersNoCommas;
+				correctLettersGuessed++;
+				wrongGuess++;
 			}
 		
-	
-			else if (userInput === hiddenLetters[l]) {
+		
+			// else if (wrongGuess++ > 1) {
 
-				console.log("TEST");
-				
-
-			}
+			// 	wrongGuess--;
+			
+			// }
 		
 		
 			else if (userInput !== rightLettersArray[l] && l === (rightLettersArray.length) - 1) {
-				console.log("WRONG");
 				wrongGuess--;
 				document.getElementById("NumberOfGuessesRemaining").innerHTML = wrongGuess;
 				lettersAlreadyGuessed.push(userInput);
 				document.getElementById("LettersAlreadyGuessed").innerHTML = lettersAlreadyGuessed;
 				
 
+
+
 			}
 
-		
+			if (wrongGuess === 0) {
+
+				alert("Game Over!")
+				resetFunction;
+			}
+
+			
+
 		}
 		
-			
-		var lettersNoCommas = hiddenLetters.join("");
-		document.getElementById("CurrentWord").innerHTML = lettersNoCommas;
-		
-		
+	// //Win Condition
+	// 	var winCondition = true;
 
-	
-		
-		//Game over
-		if (wrongGuess === 0) {
-			alert("Game Over!");
+	// 	for (var w = 0; w < hiddenLetters.length; w++) {
+	// 		if(hiddenLetters[w] === "_ "){
+	// 			winCondition = false;
 
-		}	
+	// 		}
+	// 	}
+
+	// 	if (winCondition = true) {
+	// 		alert("You Win!");
+	// 		winCount++;
+	// 		document.getElementById("WinCounter").innerHTML = winCount;
+
+	// 	}
+
+
+	// //Lose Condition
+	// 	if (wrongGuess === 0) {
+
+	// 		alert("You Lose!");
+	// 		resetFunction;
+	// 	}
+
+
+
+		
 	}
 
  	
