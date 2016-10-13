@@ -18,10 +18,10 @@
 			</div>
 
 			<div class="row">
-				<div class="col-md-1">
+				<div class="col-md-2">
 				</div>
 
-				<div class="jumbotron col-md-10">
+				<div class="jumbotron col-md-8">
 					<div class="PressAnyKey">
 						<p id="Instructions">
 							Press Any Key To Get Started!
@@ -29,36 +29,36 @@
 					</div>
 					
 					<div class="InnerDivs">
-						<p>
+						
 							Current Word
-						</p>
+						
 						<p id="CurrentWord">
 						</p>
 					</div>
 					<div class="InnerDivs">
-						<p>
+						
 							Number of Guesses Remaining
-						</p>
+						
 						<p id="NumberOfGuessesRemaining">
 						</p>
 					</div>
 					<div class="InnerDivs">
-						<p>
+						
 							Letters Already Guessed
-						</p>
+						
 						<p id="LettersAlreadyGuessed">
 						</p>
 					</div>
 					<div class="InnerDivs">
-						<p>
-							Wins
-						</p>
+
+							Wins: 
+						
 						<p id="WinCounter">
 						</p>
 					</div>
 				</div>
 
-				<div class="col-md-1">
+				<div class="col-md-2">
 				</div>
 
 			</div>
@@ -71,14 +71,17 @@
 
 	<script type="text/javascript">
 
+	//Alphabet index
+	var alphabetIndex = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+
 	//Number of Wins
 	var winCount = 0;
 
-	//Correct number of Guesses
-	var correctLettersGuessed = 0;
-
 	//Wrong letter index
 	var incorrectLetters = [];
+
+	//Incorrect Letters no commas
+	var incorrectLettersNoCommas = [];
 
 	//Wrong guess counter 
 	var wrongGuess = 10;
@@ -87,7 +90,7 @@
 	//Word Bank
 	var wordBank = {
 
-			Easy: ["cow","dot","cat","cool","red","blue","coffee","twitter","purple","reddit","hero","funnel","lightning","reaction","planetside","windows", "angriest"]
+			Easy: ["cow","dot","cat","cool","red","blue","coffee","twitter","purple","reddit","hero","funnel","lightning","reaction","planetside","windows", "angriest", "twilight", "idol", "yarn", "millionaire", "pizza", "hunter", "knots", "almond", "dubstep", "banana", "onion", "bunny", "espresso", "backpack", "tent", "whale", "plums"]
 
 		}
 	//Random word generation
@@ -127,10 +130,28 @@
 	console.log(hiddenLetters);
 
 	//Reset function
-	var resetFunction = function() {
+	function resetTrigger() {
+		incorrectLetters = [];
+		incorrectLettersNoCommas = [];
+		document.getElementById("LettersAlreadyGuessed").innerHTML = incorrectLetters;
 		wrongGuess = 10;
+		document.getElementById("NumberOfGuessesRemaining").innerHTML = wrongGuess;
 		randomEasyWord = wordBank.Easy[Math.floor(Math.random()*wordBank.Easy.length)];
-
+		hiddenLetters = [];
+		rightLettersArray = [];
+		for (var i=0; i < randomEasyWord.length; i++) {
+		rightLettersArray.push(randomEasyWord[i]);
+		}
+		console.log(rightLettersArray);
+		for (var j=0; j < randomEasyWord.length; j++) {
+		hiddenLetters.push(randomEasyWord[j]);
+		}
+		for (var k=0; k < hiddenLetters.length; k++) {
+		hiddenLetters[k] = "_ ";
+		}
+		var placeholderLetters = hiddenLetters.join("");
+		document.getElementById("CurrentWord").innerHTML = placeholderLetters;
+		console.log(hiddenLetters);
 	}	
 
 
@@ -144,13 +165,18 @@
 
 		//Loop to check answer
 		for (l = 0; l < rightLettersArray.length; l++) {
+
+			//Eliminate any key but letters
+			if (alphabetIndex.indexOf(userInput) === -1) {
+				break;
+			}
+
 			if (userInput === rightLettersArray[l]) {
 				
 				hiddenLetters[l] = userInput;
 				console.log(hiddenLetters);
 				var lettersNoCommas = hiddenLetters.join("");
 				document.getElementById("CurrentWord").innerHTML = lettersNoCommas;
-				
 				continue;
 			}
 		
@@ -163,7 +189,8 @@
 				
 				document.getElementById("NumberOfGuessesRemaining").innerHTML = wrongGuess;
 				incorrectLetters.push(userInput);
-				document.getElementById("LettersAlreadyGuessed").innerHTML = incorrectLetters;
+				incorrectLettersNoCommas = incorrectLetters.join(" ")
+				document.getElementById("LettersAlreadyGuessed").innerHTML = incorrectLettersNoCommas;
 				wrongGuess = (10 - incorrectLetters.length);
 				document.getElementById("NumberOfGuessesRemaining").innerHTML = wrongGuess;
 
@@ -180,11 +207,16 @@
 
 		if (wrongGuess === 0) {
 
-				alert("Game Over!");
-				resetFunction;
+				alert("Game Over! The word was " + randomEasyWord.toUpperCase() + "!");
+				resetTrigger();
 			}
 
+		if (hiddenLetters.indexOf("_ ") === -1) {
 
+			winCount++;
+			document.getElementById("WinCounter").innerHTML = winCount;
+			resetTrigger();
+		}
 
 		
 	}
